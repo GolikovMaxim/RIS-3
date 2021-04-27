@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.nsu.fit.golikov.ris3.dtos.NodeDTO;
 import ru.nsu.fit.golikov.ris3.services.NodeService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/node")
 public class NodeController {
@@ -33,5 +35,10 @@ public class NodeController {
     @DeleteMapping("/{id}")
     public void deleteNode(@PathVariable("id") long id) {
         nodeService.delete(id);
+    }
+
+    @GetMapping("/search")
+    public List<NodeDTO> search(@RequestParam("lat") double lat, @RequestParam("lon") double lon, @RequestParam("radius") double radius) {
+        return nodeService.search(lat, lon, radius);
     }
 }

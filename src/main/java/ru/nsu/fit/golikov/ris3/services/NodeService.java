@@ -6,7 +6,9 @@ import ru.nsu.fit.golikov.ris3.dtos.NodeDTO;
 import ru.nsu.fit.golikov.ris3.entities.Node;
 import ru.nsu.fit.golikov.ris3.repositories.NodeRepository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class NodeService {
@@ -52,5 +54,9 @@ public class NodeService {
         }
 
         nodeRepository.delete(nodeOptional.get());
+    }
+
+    public List<NodeDTO> search(double lat, double lon, double radius) {
+        return nodeRepository.getNodesInRadius(lat, lon, radius).stream().map(NodeConverter::entityToDTO).collect(Collectors.toList());
     }
 }
